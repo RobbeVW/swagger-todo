@@ -1,0 +1,75 @@
+openapi: 3.0.3
+
+info:
+  title: Title of this app
+  description: Title of this app
+  version: 1.0.0
+
+paths:
+  /tasks:
+    get:
+      description: Returns a list of tasks
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+    post:
+      description: Create a new task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                deadline:
+                  type: string
+      responses:
+        200:
+          description: Successfully created a new task
+        400:
+          description: Invalid request
+  /tasks/{id}:
+    get:
+      description: Get data about a specific task by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: Successfully returned a task
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        404:
+          description: Task not found
+
+components:
+  schemas:
+    Task:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        date_created:
+          type: string
+        deadline:
+          type: string
+        is_finished:
+          type: boolean
+
